@@ -1,0 +1,25 @@
+[package]
+name = "rl_ui"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rl_core = { path = "../core" }
+rl_render = { path = "../render" }
+rl_render_vk = { path = "../render_vk" }
+rl_render_glow = { path = "../render_glow" }
+rl_render_pod = { path = "../render_pod" }
+rl_ai = { path = "../ai" }
+
+rl_reaction = { path = "../reaction" }
+
+imgui = { path = "../../external/imgui-rs" }
+imgui-winit-support = { path = "../../external/imgui-rs/imgui-winit-support", default-features = false, features = ["winit-20"] }
+
+shrinkwraprs = "*"
+enumflags2 = { version = "*", features = ["serde", "std"] }
+
+nuklear-rust = {version = "*" }
+
+clipboard = "*"

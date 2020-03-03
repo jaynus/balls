@@ -1,0 +1,22 @@
+[package]
+name = "rl_render_pod"
+version = "0.1.0"
+authors = ["Walter Pearce <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+std140  = { path = "../../external/std140/std140" }
+serde = { version = "*", features = ["derive"] }
+ultraviolet = {path = "../../external/ultraviolet" }
+
+slotmap = { version = "*", features = ["unstable", "serde"] }
+shrinkwraprs = "*"
+
+strum = "*"
+strum_macros = "*"
+failure = "*"
+spirv-reflect = "*"
+shaderc = "*"
+spirv_cross = "*"

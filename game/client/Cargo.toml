@@ -1,0 +1,33 @@
+[package]
+name = "rl_client"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_core = { path = "../core" }
+rl_render = { path = "../render" }
+rl_render_pod = { path = "../render_pod" }
+rl_render_vk = { path = "../render_vk" }
+rl_render_glow = { path = "../render_glow", optional = true }
+rl_ui = { path = "../ui" }
+
+rl_ai = { path = "../ai" }
+rl_reaction = { path = "../reaction" }
+rl_macros = { path = "../macros" }
+
+enumflags2 = { version = "*", features = ["serde", "std"] }
+
+game-metrics = { path = "../../external/game-metrics" }
+
+log = "0.4"
+serde = "*"
+erased-serde = "*"
+bincode = "*"
+inventory = "0.1"
+
+[features]
+vulkan = []
+opengl = ["rl_render_glow"]

@@ -1,0 +1,39 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/building.rs#BuildingDefinition
+    Vec<BuildingDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Wall",
+            description: "",
+        ),
+        placement: Tile,
+        sprite: (
+            number: 87,
+            color: ( 255, 0, 0, 255 ),
+        ),
+        dimensions: (
+            x: 1,
+            y: 1,
+            z: 1,
+        ),
+    ),
+    (
+        details: (
+            name: "Wood Cutting Block",
+            description: "",
+        ),
+        sprite: (
+            number: 87,
+            color: ( 255, 0, 0, 255 ),
+            ),
+        dimensions: (
+            x: 1,
+            y: 1,
+            z: 1,
+        ),
+    )
+]

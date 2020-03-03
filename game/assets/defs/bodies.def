@@ -1,0 +1,208 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/body.rs#BodyDefProxy
+    Vec<BodyDefProxy>
+*/
+
+[
+// Head parts
+    PartGroup((
+        details: (
+            name: "Head",
+            description: "",
+        ),
+        parts: [
+            (
+                from: "Head", 
+                to: "Neck", 
+                relation:[OUTSIDE, CONNECTED], 
+            ), 
+        ], 
+    )), 
+    Part((
+        details: (
+            name: "Head",
+            description: "",
+        ),
+        group: "Head", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, THOUGHT, EATING, HEAR, SIGHT, SMELL], 
+        layers: [], 
+    )), 
+    Part((
+        details: (
+            name: "Neck",
+            description: "",
+        ),
+        group: "Head",
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, CIRCULATION], 
+        layers: [], 
+    )), 
+    
+
+// Upper Body Parts
+    PartGroup((
+        details: (
+            name: "UpperBody",
+            description: "",
+        ),
+        parts: [
+            (
+                from: "Torso", 
+                to: None, 
+                relation:[OUTSIDE, CONNECTED], 
+            ),
+            (
+                from: "Torso", 
+                to: "LeftArm", 
+                relation:[OUTSIDE, CONNECTED], 
+            ), 
+            (
+                from: "Torso", 
+                to: "RightArm", 
+                relation:[OUTSIDE, CONNECTED], 
+            ),  
+        ], 
+    )),
+    Part((
+        details: (
+            name: "Torso",
+            description: "",
+        ),
+        group: "UpperBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [CIRCULATION, ORGAN, RESPITORY], 
+        layers: [], 
+    )), 
+    Part((
+        details: (
+            name: "RightArm",
+            description: "",
+        ),
+        group: "UpperBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, CIRCULATION, SKELETON, LIMB, MANIPULATE], 
+        layers: [], 
+    )), 
+    Part((
+        details: (
+            name: "LeftArm",
+            description: "",
+        ),
+        group: "UpperBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, CIRCULATION, SKELETON, LIMB, MANIPULATE], 
+        layers: [], 
+    )), 
+
+
+// Lower Body Parts
+    PartGroup((
+        details: (
+            name: "LowerBody",
+            description: "",
+        ),
+        parts: [
+            (
+                from: "LeftLeg", 
+                to: "Groin", 
+                relation:[OUTSIDE, CONNECTED], 
+            ), 
+            (
+                from: "RightLeg", 
+                to: "Groin",
+                relation:[OUTSIDE, CONNECTED], 
+            ),  
+        ], 
+    )),
+    Part((
+        details: (
+            name: "Groin",
+            description: "",
+        ),
+        group: "LowerBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [], 
+        layers: [], 
+    )), 
+    Part((
+        details: (
+            name: "LeftLeg",
+            description: "",
+        ),
+        group: "LowerBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, CIRCULATION, SKELETON, LIMB, STANCE], 
+        layers: [], 
+    )), 
+    Part((
+        details: (
+            name: "RightLeg",
+            description: "",
+        ),
+        group: "LowerBody", 
+        category: "Humanoid", 
+        relative_size: 100, 
+        flags: [NERVOUS, CIRCULATION, SKELETON, LIMB, STANCE], 
+        layers: [], 
+    )), 
+
+// BODY
+
+    Body((
+        details: (
+            name: "Human",
+            description: "",
+        ),
+        groups: [
+            ("Head", "Head"), 
+            ("UpperBody", "UpperBody"), 
+            ("LowerBody", "LowerBody"), 
+        ], 
+        connections: [ 
+            (
+                relation:[OUTSIDE, CONNECTED], 
+                left:(group:"Head", part:"Neck",), 
+                right:(group:"UpperBody", part:"Torso"), 
+            ), 
+            (
+                relation:[OUTSIDE, CONNECTED], 
+                left:(group:"UpperBody", part:"Torso"), 
+                right:(group:"LowerBody", part:"Groin"), 
+            ), 
+        ], 
+    )),
+
+/// TEST CHANGE
+    Body((
+        details: (
+            name: "Cow",
+            description: "",
+        ),
+        groups: [
+            ("Head", "Head"),
+            ("UpperBody", "UpperBody"),
+            ("LowerBody", "LowerBody"),
+        ],
+        connections: [
+            (
+                relation:[OUTSIDE, CONNECTED],
+                left:(group:"Head", part:"Neck",),
+                right:(group:"UpperBody", part:"Torso"),
+            ),
+            (
+                relation:[OUTSIDE, CONNECTED],
+                left:(group:"UpperBody", part:"Torso"),
+                right:(group:"LowerBody", part:"Groin"),
+            ),
+        ],
+    )),
+]

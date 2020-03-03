@@ -1,0 +1,45 @@
+[submodule "external/legion"]
+	path = external/legion
+	url = git@github.com:jaynus/legion.git
+[submodule "external/ash"]
+	path = external/ash
+	url = git@git:jaynus/ash.git
+[submodule "external/winit"]
+	path = external/winit
+	url = git@git:jaynus/winit.git
+[submodule "external/vk-mem"]
+	path = external/vk-mem
+	url = git@git:jaynus/vk-mem.git
+[submodule "external/ultraviolet"]
+	path = external/ultraviolet
+	url = git@github.com:jaynus/ultraviolet.git
+[submodule "external/std140"]
+	path = external/std140
+	url = git@git:jaynus/std140.git
+[submodule "game/worldgen"]
+	path = game/worldgen
+	url = git@github.com:jaynus/worldgen.git
+[submodule "external/graphy"]
+	path = external/graphy
+	url = git@github.com:jaynus/graphy.git
+[submodule "external/purple"]
+	path = external/purple
+	url = git@github.com:jaynus/purple.git
+[submodule "external/imgui-rs"]
+	path = external/imgui-rs
+	url = git@github.com:jaynus/imgui-rs.git
+[submodule "external/glow"]
+	path = external/glow
+	url = git@github.com:jaynus/glow.git
+[submodule "external/glutin"]
+	path = external/glutin
+	url = https://github.com/rust-windowing/glutin.git
+[submodule "external/game-metrics"]
+	path = external/game-metrics
+	url = git@github.com:jaynus/game-metrics.git
+[submodule "external/type-uuid"]
+	path = external/type-uuid
+	url = git@github.com:jaynus/type-uuid.git
+[submodule "external/spine"]
+	path = external/spine
+	url = git@git:jaynus/spine.git

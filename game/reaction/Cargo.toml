@@ -1,0 +1,16 @@
+[package]
+name = "rl_reaction"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_core = { path = "../core" }
+
+rl_macros = { path = "../macros" }
+
+num = "*"
+num-traits = "*"
+num-derive = "*"

@@ -1,0 +1,11 @@
+[package]
+name = "rl_render"
+version = "0.1.0"
+authors = ["Walter Pearce <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_core = { path = "../core" }
+rl_render_pod = { path = "../render_pod" }

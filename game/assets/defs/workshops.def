@@ -1,0 +1,20 @@
+#![enable(unwrap_newtypes,implicit_some)]
+/*!
+    @import /core/src/defs/workshop.rs#WorkshopDefinition
+    Vec<WorkshopDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Wood Cutting Block",
+            description: "",
+        ),
+        reactions: [
+            "Chop Log (Round)",
+            "Chop Log (Plank)",
+        ],
+
+        building: "Wood Cutting Block",
+    )
+]

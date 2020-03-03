@@ -1,0 +1,116 @@
+#![enable(unwrap_newtypes,implicit_some)]
+/*!
+    @import /core/src/defs/race.rs#RaceDefinition
+    Vec<RaceDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Human",
+            description: "",
+        ),
+        body: "Human",
+        sprite: (
+            number: 2,
+            color: (63, 127, 191, 255),
+        ),
+        attributes: (
+            base: (
+                strength: 1000,
+                agility: 1000,
+                toughness: 1000,
+                endurance: 1000,
+                immunity: 1000,
+                healing: 1000,
+                analytical: 1000,
+                focus: 1000,
+                willpower: 1000,
+                creativity: 1000,
+                intuition: 1000,
+                patience: 1000,
+                memory: 1000,
+                linguistic: 1000,
+                spatial: 1000,
+                kinesthetic: 1000,
+                empathy: 1000,
+                social: 1000,
+            ),
+            deviation: (
+                strength: 200,
+                agility: 200,
+                toughness: 200,
+                endurance: 200,
+                immunity: 200,
+                healing: 200,
+                analytical: 200,
+                focus: 200,
+                willpower: 200,
+                creativity: 200,
+                intuition: 200,
+                patience: 200,
+                memory: 200,
+                linguistic: 200,
+                spatial: 200,
+                kinesthetic: 200,
+                empathy: 200,
+                social: 200,
+            )
+        ),
+    ),
+
+    (
+        details: (
+            name: "Cow",
+            description: "",
+        ),
+        body: "Cow",
+        sprite: (
+            number: 99,
+            color: (255, 255, 255, 255),
+        ),
+        attributes: (
+            base: (
+                strength: 1000,
+                agility: 1000,
+                toughness: 1000,
+                endurance: 1000,
+                immunity: 1000,
+                healing: 1000,
+                analytical: 1000,
+                focus: 1000,
+                willpower: 1000,
+                creativity: 1000,
+                intuition: 1000,
+                patience: 1000,
+                memory: 1000,
+                linguistic: 1000,
+                spatial: 1000,
+                kinesthetic: 1000,
+                empathy: 1000,
+                social: 1000,
+            ),
+            deviation: (
+                strength: 200,
+                agility: 200,
+                toughness: 200,
+                endurance: 200,
+                immunity: 200,
+                healing: 200,
+                analytical: 200,
+                focus: 200,
+                willpower: 200,
+                creativity: 200,
+                intuition: 200,
+                patience: 200,
+                memory: 200,
+                linguistic: 200,
+                spatial: 200,
+                kinesthetic: 200,
+                empathy: 200,
+                social: 200,
+            )
+        ),
+
+    ),
+]

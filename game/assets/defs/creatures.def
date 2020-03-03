@@ -1,0 +1,19 @@
+#![enable(unwrap_newtypes,implicit_some)]
+/*!
+    @import /core/src/defs/creature.rs#CreatureDefinition
+    Vec<CreatureDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Cow",
+            description: "",
+        ),
+        race: "Cow",
+        sprite: (
+            color: ( 255, 0, 0, 255 ),
+            ),
+        decisions: ["Idle"]
+    )
+]

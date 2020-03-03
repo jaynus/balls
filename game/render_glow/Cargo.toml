@@ -1,0 +1,29 @@
+[package]
+name = "rl_render_glow"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_core = { path = "../core" }
+rl_render_pod = { path = "../render_pod" }
+glow = { path = "../../external/glow" }
+glutin = { git = "https://github.com/rust-windowing/glutin.git", optional = true }
+failure = "*"
+bitflags = "*"
+num = "*"
+num-traits = "*"
+num-derive = "*"
+regex = "*"
+
+
+[features]
+default = ["window-glutin"]
+web-sys = ["web_sys", "wasm-bindgen", "glow/web-sys"]
+window-glutin = ["glutin", "glow/glutin"]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web_sys = { version = "0.3", package = "web-sys", features=["console"], optional = true }
+wasm-bindgen = { version = "0.2", optional = true  }
