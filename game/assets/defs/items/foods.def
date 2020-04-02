@@ -1,0 +1,47 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/item.rs#ItemDefinition
+    Vec<ItemDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Liquid",
+
+            description: "",
+
+        ),
+        kind: Food,
+        sprite: (
+            number: 61,
+            color: ( 213, 143, 75, 255, ),
+            ),
+        material_limits: [ Any(Liquid) ],
+        dimensions: (
+            x: 10,
+            y: 10,
+            z: 10,
+        ),
+    ),
+    (
+            details: (
+                name: "Meat",
+
+                description: "",
+
+            ),
+            kind: Food,
+            material_limits: [ Kind(Organic(Flesh)) ],
+            properties: 2147483648,
+            sprite: (
+                number: 109,
+                color: ( 213, 0, 0, 255, ),
+                ),
+            dimensions: (
+                x: 10,
+                y: 10,
+                z: 10,
+            ),
+        ),
+]

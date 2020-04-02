@@ -1,0 +1,23 @@
+[package]
+name = "rl_ai"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rl_core = { path = "../core" }
+
+rl_reaction = { path = "../reaction" }
+
+rl_macros = { path = "../macros" }
+rl_render_pod = { path = "../render_pod" }
+
+derivative = "2"
+serde = { version = "1", features = ["derive"] }
+strum = "*"
+log = "0.4"
+strum_macros = "*"
+enumflags2 = { version = "*", features = ["serde", "std"] }
+game-metrics = { path = "../../external/game-metrics" }
+thiserror = "*"
+anyhow = "*"

@@ -1,0 +1,24 @@
+[submodule "external/legion"]
+	path = external/legion
+	url = https://github.com/jaynus/legion.git
+[submodule "external/std140"]
+	path = external/std140
+	url = git@git:jaynus/std140.git
+[submodule "external/ultraviolet"]
+	path = external/ultraviolet
+	url = https://github.com/jaynus/ultraviolet.git
+[submodule "external/graphy"]
+	path = external/graphy
+	url = https://github.com/jaynus/graphy.git
+[submodule "external/purple"]
+	path = external/purple
+	url = https://github.com/jaynus/purple.git
+[submodule "external/game-metrics"]
+	path = external/game-metrics
+	url = https://github.com/jaynus/game-metrics.git
+[submodule "external/type-uuid"]
+	path = external/type-uuid
+	url = https://github.com/jaynus/type-uuid.git
+[submodule "game/worldgen"]
+	path = game/worldgen
+	url = https://github.com/jaynus/worldgen.git

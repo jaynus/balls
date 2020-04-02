@@ -1,0 +1,16 @@
+[package]
+name = "rl_render"
+version = "0.1.0"
+authors = ["Walter Pearce <jaynus@gmail.com>"]
+edition = "2018"
+
+
+[dependencies]
+rl_core = { path = "../core" }
+rl_render_pod = { path = "../render_pod" }
+
+log = "0.4"
+thiserror = "1"
+anyhow = "1"
+
+rendy = { path = "../../../rendy/rendy", features = ["base", "wsi", "init-winit", "texture-image", "texture-palette"] }

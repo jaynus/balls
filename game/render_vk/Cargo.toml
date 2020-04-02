@@ -1,0 +1,22 @@
+[package]
+name = "rl_render_vk"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_core = { path = "../core" }
+#rl_render = { path = "../render" }
+rl_render_pod = { path = "../render_pod" }
+rl_ai = { path = "../ai" }
+vk-mem = { version = "*" }
+ash = { version = "*" }
+
+
+derivative = "2"
+thiserror = "*"
+anyhow = "*"
+
+game-metrics = { path = "../../external/game-metrics" }

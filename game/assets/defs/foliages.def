@@ -1,0 +1,39 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/foliage.rs#FoliageDefinition
+    Vec<FoliageDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Grass",
+
+            description: "",
+
+        ),
+        kind: Grass,
+        collision: None,
+        sprite: (
+            number: 176,
+            color: ( 0, 99, 16, 255, ),
+        ),
+        material: "Wood",
+        nutrition: Value(Nutrition(calories: (start: 100, end: 200)  )),
+    ),
+    (
+        details: (
+            name: "Oak Tree",
+
+            description: "",
+
+        ),
+        kind: Tree,
+        collision: Solid,
+        sprite: (
+            number: 5,
+            color: ( 255, 255, 255, 255, ),
+        ),
+        material: "Wood",
+    ),
+]

@@ -1,0 +1,16 @@
+[package]
+name = "rl_macros"
+version = "0.1.0"
+authors = ["Walter Pearce <jaynus@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+syn = { version = "1", features = ["full"] }
+quote = "1"
+proc-macro2 = "1"
+proc-macro-hack = "0.5"
+uuid = { version = "0.8", features = ["v5"] }
+
+[lib]
+name = "rl_macros"
+proc-macro = true

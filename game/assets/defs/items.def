@@ -1,0 +1,132 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/item.rs#ItemDefinition
+    Vec<ItemDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Axe",
+            description: "",
+        ),
+        kind: Tool,
+        abilities: [ ( kind: Chopping, quality: 10 ), ],
+        material_limits: [Any(Solid) ],
+        sprite: (
+            number: 63,
+            color: ( 255, 0, 0, 255 ),
+            ),
+        dimensions: (
+            x: 1,
+            y: 1,
+            z: 1,
+        ),
+    ),
+    (
+        details: (
+            name: "Pickaxe",
+            description: "",
+        ),
+        kind: Tool,
+        abilities: [ ( kind: Digging, quality: 10 ), ],
+        material_limits: [Any(Solid) ],
+        sprite: (
+            number: 63,
+            color: ( 255, 0, 0, 255 ),
+            ),
+        dimensions: (
+            x: 1,
+            y: 1,
+            z: 1,
+        ),
+    ),
+    (
+        details: (
+            name: "Backpack",
+            description: "",
+        ),
+        kind: Apparel,
+        material_limits: [Any(Solid) ],
+        sprite: (
+            number: 63,
+            color: ( 255, 0, 0, 255 ),
+            ),
+        extensions: [ Container(capacity: (x: 10, y: 10, z: 10)) ],
+        dimensions: (
+            x: 1,
+            y: 1,
+            z: 1,
+        ),
+    ),
+    (
+        details: (
+            name: "Rubble",
+            description: "",
+        ),
+        kind: Stone,
+        material_limits: [ Kind(Rock(Any)) ],
+        sprite: (
+            number: 178,
+            color: ( 141, 134, 127, 55 ),
+            ),
+        dimensions: (
+            x: 1000,
+            y: 1000,
+            z: 100,
+        ),
+    ),
+
+    (
+        details: (
+            name: "Log",
+            description: "",
+        ),
+        kind: Wood,
+        material_limits: [ Kind(Organic(Wood)) ],
+        sprite: (
+            number: 22,
+            color: ( 255, 0, 255, 255, ),
+            ),
+        dimensions: (
+            x: 1000,
+            y: 1000,
+            z: 1000,
+        ),
+    ),
+    (
+        details: (
+            name: "Round",
+            description: "",
+        ),
+        kind: Wood,
+        material_limits: [ Kind(Organic(Wood)) ],
+        sprite: (
+            number: 9,
+            color: ( 213, 143, 75, 255, ),
+            ),
+        dimensions: (
+            x: 1000,
+            y: 1000,
+            z: 1000,
+        ),
+    ),
+    (
+        details: (
+            name: "Plank",
+            description: "",
+        ),
+        kind: Wood,
+        material_limits: [ Kind(Organic(Wood)) ],
+        sprite: (
+            number: 61,
+            color: ( 213, 143, 75, 255, ),
+            ),
+        dimensions: (
+            x: 1000,
+            y: 1000,
+            z: 1000,
+        ),
+    ),
+
+]

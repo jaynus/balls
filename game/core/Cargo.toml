@@ -1,0 +1,68 @@
+[package]
+name = "rl_core"
+version = "0.1.0"
+authors = ["jaynus <jaynus@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rl_render_pod = { path = "../render_pod" }
+rl_macros = { path = "../macros" }
+proc-macro-hack = "0.5"
+
+#worldgen = { path = "../worldgen" }
+winit = { version = "0.22" }
+
+legion = {path = "../../external/legion", features = ["ffi", "serialize"] }
+
+serde = { version = "*", features = ["derive"] }
+toml = { version = "*", features = ["preserve_order"] }
+ron = { git = "https://github.com/ron-rs/ron.git" }
+
+inventory = "0.1"
+ultraviolet = {path = "../../external/ultraviolet" }
+bitvec = "*"
+rayon = "*"
+
+shrinkwraprs = "*"
+chrono = { version = "*", features = ["serde"] }
+bitintr = "*"
+smallvec = { git = "https://github.com/servo/rust-smallvec.git", features = ["serde"] }
+derivative = "2"
+fxhash = "*"
+peg = { git = "https://github.com/kevinmehall/rust-peg.git" }
+image = "*"
+bitflags = "*"
+crossbeam = "*"
+arraydeque = "*"
+slice-deque = "*"
+num-traits = "*"
+slotmap = { version = "*", features = ["unstable", "serde"] }
+luajit = "*"
+downcast-rs = "*"
+rstar = "*"
+parking_lot = { version = "*", features = ["serde"] }
+crossbeam-channel = "*"
+petgraph = "*"
+auto_ops = "*"
+enumflags2 = { version = "*", features = ["serde", "std"] }
+paste = "*"
+game-metrics = { path = "../../external/game-metrics" }
+rand = "*"
+rand_xorshift = "*"
+rand_distr = "*"
+impls = "*"
+fasthash = "*"
+bit-set = "*"
+walkdir = "*"
+strum = "*"
+strum_macros = "*"
+sha2 =  "*"
+log = "0.4"
+type-uuid = { path = "../../external/type-uuid", features = ["autogen"] }
+uuid = { version = "0.8", features = ["v4"] }
+thiserror = "*"
+anyhow = "*"
+
+purple = { path = "../../external/purple" }

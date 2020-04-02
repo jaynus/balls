@@ -1,0 +1,168 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/material.rs#MaterialDefinition
+    Vec<MaterialDefinition>
+*/
+
+// https://www.makeitfrom.com/compare/Granite/Marble
+// http://www.matweb.com/search/DataSheet.aspx?MatGUID=a1c4c37b55e24765bcb63b4665b44f05
+
+[
+    (
+        details: (
+            name: "soil",
+            description: "",
+        ),
+        inherits: None,
+        category: Soil,
+        states: {
+            Solid: (
+                details: (
+                    name: "soil",
+                    description: "",
+                ),
+                density: 2700, // mg/cc
+                hardness: 310, // Brinell
+                porosity: 2, // Percentage / 1000
+                permeability: 1000, // darcy * 1000
+                elasticity: 54000, // MPa
+                tensile_strength: 9, // mpa
+                tensile_yield: 0,
+                compressive_yield_strength: 540, // mpa
+                impact_toughness: 40500,// mm/cm2
+                fatigue_strength: 0, // percentage of tensile
+                fracture_toughness: 0, // ????
+                flexural_strength: 15, // mpa
+                shear_modulus: 27000, //mpa
+                poisson_ratio: 20, // * 100
+                electric_resistance: 99999999,
+                specific_heat_capacity: 870, // J/kg K
+                thermal_conductivity: 2900, // mW/m K
+                abrasive_hardness: 40, // ?
+                item_sprite: (
+                    color: ( 255, 170, 0, 255 ),
+                    ),
+                map_sprite: (
+                    color: ( 255, 170, 0, 255 ),
+                    ),
+            ),
+        },
+
+    ),
+    (
+        details: (
+            name: "marble",
+            description: "",
+        ),
+        inherits: None,
+        category: Rock(Metamorphic),
+        states: {
+            Solid: (
+                details: (
+                    name: "marble",
+                    description: "",
+                ),
+                density: 2700, // mg/cc
+                hardness: 310, // Brinell
+                porosity: 2, // Percentage / 1000
+                permeability: 1, // darcy * 1000
+                elasticity: 54000, // MPa
+                tensile_strength: 9, // mpa
+                tensile_yield: 0,
+                compressive_yield_strength: 540, // mpa
+                impact_toughness: 40500,// mm/cm2
+                fatigue_strength: 0, // percentage of tensile
+                fracture_toughness: 0, // ????
+                flexural_strength: 15, // mpa
+                shear_modulus: 27000, //mpa
+                poisson_ratio: 20, // * 100
+                electric_resistance: 99999999,
+                specific_heat_capacity: 870, // J/kg K
+                thermal_conductivity: 2900, // mW/m K
+                abrasive_hardness: 40, // ?
+                item_sprite: (
+                    color: ( 220, 220, 220, 255 ),
+                    ),
+                map_sprite: (
+                    color: ( 220, 220, 220, 255 ),
+                    ),
+            ),
+        },
+        melt_point: 1500,
+        boil_point: None,
+        ignite_point: None,
+        freeze_point: None,
+
+    ),
+    (
+        details: (
+            name: "Water",
+            description: "",
+        ),
+        inherits: None,
+        category: Liquid,
+        states: {
+            Liquid: (
+                details: (
+                    name: "Water",
+                    description: "",
+                ),
+                item_sprite: (
+                    color: ( 137, 207, 240, 255 ),
+                    ),
+                map_sprite: (
+                    color: ( 137, 207, 240, 255 ),
+                    ),
+
+                nutrition: ( hydration: (start: 30, end: 30)  ),
+            ),
+        },
+        boil_point: 100,
+        freeze_point: 0,
+    ),
+    (
+        details: (
+            name: "meat",
+            description: "",
+        ),
+        inherits: None,
+        category: Organic(Flesh),
+        states: {
+            Solid: (
+                details: (
+                    name: "meat",
+                    description: "",
+                ),
+                item_sprite: (
+                    color: ( 0, 99, 16, 255 ),
+                    ),
+                map_sprite: (
+                    color: ( 0, 99, 16, 255 ),
+                    ),
+                nutrition: ( calories: (start: 100, end: 100)  ),
+            ),
+        },
+    ),
+    (
+        details: (
+            name: "wood",
+            description: "",
+        ),
+        inherits: None,
+        category: Organic(Wood),
+        states: {
+            Solid: (
+                details: (
+                    name: "wood",
+                    description: "",
+                ),
+                item_sprite: (
+                    color: ( 213, 143, 75, 255, ),
+                    ),
+                map_sprite: (
+                    color: ( 213, 143, 75, 255, ),
+                    ),
+            ),
+        },
+    ),
+]

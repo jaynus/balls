@@ -1,0 +1,186 @@
+#![enable(unwrap_newtypes, implicit_some)]
+/*!
+    @import /core/src/defs/reaction.rs#ReactionDefinition
+    Vec<ReactionDefinition>
+*/
+
+[
+    (
+        details: (
+            name: "Channel",
+            description: "",
+        ),
+        category: MapTransformation,
+        reagents: [
+            (
+                conditions: ["has item ability digging"]
+            ),
+            (
+                kind: Tile(  flags: None, kind: Floor,), materials: [ Any(Solid), ],
+            ),
+        ],
+        product: (
+            kind: Item("Rubble"),
+            material: Source,
+            count: 1,
+            random: ( chance: 0.5 ),
+        ),
+        duration: 1.0,
+        effects: [( name: "TileChannelEffect" )]
+    ),
+    (
+        details: (
+            name: "Dig",
+            description: "",
+        ),
+        category: MapTransformation,
+        reagents: [
+            (
+                conditions: ["has item ability digging"]
+            ),
+            (
+                conditions: ["target is tile solid"],
+            ),
+        ],
+        product: (
+            kind: Item("Rubble"),
+            material: Source,
+            count: 1,
+        ),
+        duration: 1.0,
+        effects: [( name: "TileDigEffect" )]
+    ),
+    (
+        details: (
+            name: "Chop Tree",
+            description: "",
+        ),
+        category: PawnAction,
+        reagents: [
+            (
+                conditions: ["has item ability chopping"]
+            ),
+            (
+                conditions: ["target is foliage tree"],
+            )
+        ],
+        product: (
+            kind: Item("Log"),
+            material: Source,
+            count: 5,
+        ),
+        duration: 1.0,
+        effects: [( name: "TreeChopEffect" )]
+    ),
+
+    /// production reactions
+    (
+        details: (
+            name: "Chop Log (Plank)",
+            description: "",
+        ),
+        category: WorkshopProduction,
+        reagents: [
+            (
+                conditions: ["has item ability chopping"]
+            ),
+            (
+                conditions: ["target is item log"],
+                consume_chance: 100,
+            )
+        ],
+        product: (
+            kind: Item("Plank"),
+            material: Source,
+            count: 5,
+        ),
+        duration: 1.0,
+        effects: [( name: "ProduceItemEffect" )]
+    ),
+
+    (
+        details: (
+            name: "Chop Log (Round)",
+            description: "",
+        ),
+        category: WorkshopProduction,
+        reagents: [
+            (
+                conditions: ["has item ability chopping"]
+            ),
+            (
+                conditions: ["target is item log"],
+                consume_chance: 100,
+            )
+        ],
+        product: (
+            kind: Item("Round"),
+            material: Source,
+            count: 5,
+        ),
+        duration: 1.0,
+        effects: [( name: "ProduceItemEffect" )]
+    ),
+
+    (
+        details: (
+            name: "Consume (Any)",
+            description: "",
+        ),
+        category: PawnAction,
+        reagents: [
+            (
+                conditions: ["target is item nutrition any"],
+                consume_chance: 100,
+            ),
+        ],
+        duration: 1.0,
+        effects: [( name: "ConsumeEdibleEffect" )]
+    ),
+
+     (
+            details: (
+                name: "Consume (Hydration)",
+                description: "",
+            ),
+            category: PawnAction,
+            reagents: [
+                (
+                    conditions: ["target is item nutrition hydration"],
+                    consume_chance: 100,
+                )
+            ],
+            duration: 1.0,
+            effects: [( name: "ConsumeEdibleEffect" )]
+        ),
+        (
+            details: (
+                name: "Consume (Calories)",
+                description: "",
+            ),
+            category: PawnAction,
+            reagents: [
+                (
+                    conditions: ["target is item nutrition calories"],
+                    consume_chance: 100,
+                )
+            ],
+            duration: 1.0,
+            effects: [( name: "ConsumeEdibleEffect" )]
+        ),
+        (
+            details: (
+                name: "Consume (Foliage)",
+                description: "",
+            ),
+            category: PawnAction,
+            reagents: [
+                (
+                   conditions: ["target is foliage grass"],
+                    consume_chance: 100,
+                )
+            ],
+            duration: 1.0,
+            effects: [( name: "ConsumeEdibleEffect" )]
+        ),
+]
