@@ -441,7 +441,7 @@ impl EntitiesPass {
                         translation.z += 0.99;
 
                         slice[index] = SpriteVert {
-                            pos: translation.as_array(),
+                            pos: *translation.as_array(),
                             sprite_number: sprite.sprite_number,
                             color: sprite.color.pack(),
                         };
@@ -587,7 +587,7 @@ impl EntitiesPass {
                         let mut translation = map.tile_to_world(coord);
                         translation.z += 1.0 - layer.into_f32();
                         slice[count] = SpriteVert {
-                            pos: translation.as_array(),
+                            pos: *translation.as_array(),
                             sprite_number: sprite.sprite_number,
                             color: color.pack(),
                         };

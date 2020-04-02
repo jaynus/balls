@@ -216,8 +216,7 @@ pub fn build_decisions_window(world: &mut World, resources: &mut Resources) {
                     }
                     ui.columns(1, im_str!(""), false);
 
-                    if ui
-                        .collapsing_header(im_str!("Decision State"))
+                    if imgui::CollapsingHeader::new(im_str!("Decision State"))
                         .default_open(true)
                         .build(ui)
                     {
