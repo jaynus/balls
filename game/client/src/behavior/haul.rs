@@ -85,10 +85,11 @@ pub mod nodes {
                     .world
                     .get_component::<ItemComponent>(item_entry.entity)
                 {
-                    // skip if its already in a stockpile, or is a child of someone else
-                    if state
-                        .world
-                        .has_component::<StockpileItemChildComponent>(item_entry.entity)
+                    // skip if its already in a stockpile, or is a child of someone else, or is active
+                    if state.world.has_component::<ActivePickupComponent>(item_entry.entity)
+                        || state
+                            .world
+                            .has_component::<StockpileItemChildComponent>(item_entry.entity)
                         || state
                             .world
                             .has_component::<ItemContainerChildComponent>(item_entry.entity)

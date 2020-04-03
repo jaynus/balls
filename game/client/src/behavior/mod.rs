@@ -1,7 +1,11 @@
-use rl_ai::bt::{self, make, BehaviorStatus};
+use rl_ai::{
+    pathfinding::SpatialMapSet,
+    bt::{self, make, BehaviorStatus}
+};
 use rl_core::{
     components::PositionComponent, data::Target, defs::reaction::ReactionDefinitionId, fnv,
     legion::prelude::*, smallvec::SmallVec, GameStateRef,
+    map::{Map, spatial::{SpatialMap, StaticSpatialMap}},
 };
 
 pub mod creature;
@@ -95,6 +99,8 @@ pub mod nodes {
                             if result.result.is_ok() {
                                 return Some(BehaviorStatus::success());
                             } else {
+                                log::trace!(target: "behavior::movement", "src={:?}, Failing movement, pathing failed: e = {:?}", source_entity, result.result);
+                                log::trace!(target: "behavior::movement", "src={:?}, dst={:?}", current_tile, target_tile);
                                 return Some(BehaviorStatus::failure());
                             }
                         }
@@ -109,6 +115,30 @@ pub mod nodes {
 
                 return early_result;
             }
+
+            // Find an appropriate adjascent tile to request movement to
+            let target_tile = {
+                let map = state.resources.get::<Map>().unwrap();
+                let spatial_map = state.resources.get::<SpatialMap>().unwrap();
+                let static_spatial_map = state.resources.get::<StaticSpatialMap>().unwrap();
+                let spatial_set = [&**static_spatial_map, &**spatial_map];
+
+                if map.get(target_tile).is_walkable() && spatial_map.is_walkable(target_tile) {
+                    target_tile
+                } else {
+                    if let Some(neighbor) = map.neighbors_3d(&target_tile).iter().find(|neighbor| {
+                        if spatial_set.collides(neighbor) {
+                            false
+                        } else {
+                            true
+                        }
+                    }) {
+                        *neighbor
+                    } else {
+                        return BehaviorStatus::failure();
+                    }
+                }
+            };
 
             // We arnt there yet, are we moving there?
             let request = MovementRequest::with_distance(current_tile, target_tile, 0);
@@ -130,8 +160,9 @@ pub mod nodes {
                 parameters.active_request = Some(request);
             }
             return BehaviorStatus::running(false);
-        } else {
         }
+
+        log::trace!(target: "behavior", "Failing movement");
 
         BehaviorStatus::failure()
     }

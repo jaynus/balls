@@ -95,11 +95,12 @@ pub mod nodes {
                     fnv!("MoveParameters"),
                     MoveParameters::new_tile(task_location),
                 );
-
+                log::trace!(target: "behavior", "src={:?}, find_task: success = {:?}, {:?}", args.entity, task_location, entry.entity);
                 return BehaviorStatus::success();
             }
             Err(e) => {
                 if let FindBestTaskError::MissingReagent(kind) = e {
+                    log::trace!(target: "behavior", "src={:?}, find_task: failing for missing reagent = {:?}", args.entity, kind);
                     args.blackboard.insert(fnv!("missing_reagent"), kind);
                     return BehaviorStatus::failure();
                 }

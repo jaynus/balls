@@ -188,13 +188,13 @@ fn main() -> Result<(), anyhow::Error> {
         .map_or_else(Settings::default, |data| {
             rl_core::toml::from_str(&data).unwrap()
         });
-    /*
-        let mut logger_settings = game_metrics::LoggerSettings::default();
-        logger_settings
-            .targets
-            .insert("behavior".to_string(), game_metrics::LogLevel::Trace);
-        game_metrics::Logger::change_settings(logger_settings);
-    */
+
+    let mut logger_settings = game_metrics::LoggerSettings::default();
+    logger_settings
+        .targets
+        .insert("behavior".to_string(), game_metrics::LogLevel::Trace);
+    game_metrics::Logger::swap_settings(logger_settings);
+
     let event_loop = EventLoop::new();
     let mut app = Application::new(settings.clone())?;
 

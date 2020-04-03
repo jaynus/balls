@@ -558,11 +558,12 @@ pub fn build_debug_overlay(
                                     if let Some(name) =
                                         world.get_component::<NameComponent>(*entity)
                                     {
-                                        ui.text(&format!("\tP: {}", name.name))
+                                        ui.text(&format!("\tP: {}", name.name));
                                     } else if let Some(item) =
                                         world.get_component::<ItemComponent>(*entity)
                                     {
-                                        ui.text(&format!("\tI: {}", item.fetch(&item_defs).name()))
+                                        ui.text(&format!("\tI: {}", item.fetch(&item_defs).name()));
+                                        ui.text(&format!("\tActivePickup: {}", world.has_component::<ActivePickupComponent>(*entity)));
                                     } else if let Some(workshop) =
                                         world.get_component::<WorkshopComponent>(*entity)
                                     {
@@ -633,8 +634,6 @@ pub fn build_debug_overlay(
                         .build(ui)
                     {
                         let tile = map.get(input_state.mouse_tile_position);
-                        ui.text(&format!("kind: {:?}", tile.kind));
-                        ui.text(&format!("flag: {:?}", tile.flags));
 
                         // if theres any entities under the mouse, list them here
                         ui.text("Entities: ");
@@ -650,6 +649,9 @@ pub fn build_debug_overlay(
                             .for_each(|entry| {
                                 ui.text(&format!("\t{:?}", entry.entity));
                             });
+
+                        ui.text(&format!("kind: {:?}", tile.kind));
+                        ui.text(&format!("flag: {:?}", tile.flags));
                     }
                 });
 

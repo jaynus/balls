@@ -235,7 +235,7 @@ pub fn build_sync_entity_rtree_system(
                                 DimensionsComponent::default()
                             };
 
-                            remove_cache.push(SpatialMapEntry::with_rect(
+                            static_remove_cache.push(SpatialMapEntry::with_rect(
                                 entity,
                                 Rectangle::from_corners(
                                     (**position).into(),
