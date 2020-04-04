@@ -12,7 +12,7 @@
         ),
         placement: Tile,
         sprite: (
-            number: 87,
+            number: 205,
             color: ( 255, 0, 0, 255 ),
         ),
         dimensions: (

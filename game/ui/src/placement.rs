@@ -47,19 +47,19 @@ pub fn build_placement_system(
 
         if input_state.state == InputStateKind::Placement {
             if let Some(placement) = input_state.placement_request() {
+                let mouse_pos = input_state.mouse_world_position
+                    - Vec3::new(
+                        map.sprite_dimensions.x as f32 / 2.0,
+                        map.sprite_dimensions.y as f32 / 2.0,
+                        0.0,
+                    );
+
                 *world.get_component_mut::<Sprite>(placement_entity).unwrap() =
                     placement.on_draw(world, resources);
 
                 *world
                     .get_component_mut::<Translation>(placement_entity)
-                    .unwrap() = Translation(
-                    input_state.mouse_world_position
-                        - Vec3::new(
-                            map.sprite_dimensions.x as f32 / 2.0,
-                            map.sprite_dimensions.y as f32 / 2.0,
-                            0.0,
-                        ),
-                );
+                    .unwrap() = Translation(mouse_pos);
 
                 while let Some(event) = resources
                     .get_mut::<Channel<InputActionEvent>>()
@@ -68,10 +68,7 @@ pub fn build_placement_system(
                 {
                     match event {
                         InputActionEvent::Released(ActionBinding::Selection) => {
-                            complete = Some((
-                                input_state.mouse_world_position,
-                                input_state.mouse_tile_position,
-                            ));
+                            complete = Some((mouse_pos, map.world_to_tile(mouse_pos)));
                         }
 
                         InputActionEvent::Released(ActionBinding::DoAction) => {

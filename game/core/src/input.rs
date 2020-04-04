@@ -10,8 +10,8 @@ use rl_render_pod::sprite::Sprite;
 use std::sync::Arc;
 use winit::{
     event::{
-        ElementState, Event, KeyboardInput, ModifiersState, MouseButton,
-        MouseScrollDelta, TouchPhase, VirtualKeyCode, WindowEvent,
+        ElementState, Event, KeyboardInput, ModifiersState, MouseButton, MouseScrollDelta,
+        TouchPhase, VirtualKeyCode, WindowEvent,
     },
     window::Window,
 };
@@ -76,6 +76,7 @@ pub enum DesignateAction {
     Dig,
     ChopTree,
     Stockpile,
+    Building,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -365,7 +366,7 @@ impl Manager for InputManager {
             Event::WindowEvent { event, .. } => match event {
                 WindowEvent::ModifiersChanged(modifiers) => {
                     input_state.modifiers_state = *modifiers;
-                },
+                }
                 WindowEvent::KeyboardInput { input, .. } => match input {
                     KeyboardInput {
                         virtual_keycode,

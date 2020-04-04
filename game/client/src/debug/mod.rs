@@ -6,6 +6,7 @@ use rl_core::{
     components::*,
     data::{SpawnArguments, Target, TargetPosition},
     defs::{
+        building::BuildingDefinition,
         item::{ItemComponent, ItemDefinition},
         material::{MaterialComponent, MaterialDefinition, MaterialDefinitionId, MaterialState},
         workshop::{WorkshopComponent, WorkshopDefinition},
@@ -228,6 +229,7 @@ pub fn build_debug_overlay(
         pub selected_item: usize,
         pub selected_material: usize,
         pub selected_workshop: usize,
+        pub selected_building: usize,
     };
 
     iaus::build(world, resources);
@@ -343,6 +345,74 @@ pub fn build_debug_overlay(
                                                                 MaterialState::Solid)
                                                     },
                                                 ).unwrap();
+                                        },
+                                        |_, _| println!("PLACEMENT CANCELED"),
+                                    ),
+                                );
+                        }
+                    }
+                    if imgui::CollapsingHeader::new(im_str!("Spawn Building"))
+                        .default_open(true)
+                        .build(ui)
+                    {
+                        let buildings = {
+                            //let workshops = resources.get::<DefinitionStorage<WorkshopDefinition>>().unwrap();
+                            resources
+                                .get::<DefinitionStorage<BuildingDefinition>>()
+                                .unwrap()
+                                .keys()
+                                .map(|name| imgui::ImString::from(name.clone()))
+                                /*
+                                TODO: .map(|name| {
+                                   if workshops.has_key(name) {
+                                       None
+                                   } else {
+                                    Some(imgui::ImString::from(name.clone()))
+                                }
+                                })*/
+                                .collect::<Vec<_>>()
+                        };
+
+                        imgui::ComboBox::new(im_str!("Building##Selection")).build_simple_string(
+                            ui,
+                            &mut window_state.selected_building,
+                            buildings.iter().collect::<Vec<_>>().as_slice(),
+                        );
+                        if ui.button(im_str!("Spawn##Building"), [0.0, 0.0]) {
+                            let selected_building = window_state.selected_building;
+                            resources
+                                .get_mut::<InputState>()
+                                .unwrap()
+                                .swap_placement_request(
+                                    world,
+                                    resources,
+                                    rl_core::input::PlacementRequestImpl::new(
+                                        move |_, _| Sprite {
+                                            sprite_number: 7,
+                                            color: placement_color,
+                                            ..Default::default()
+                                        },
+                                        move |_world, resources, _, coord| {
+                                            let (material_defs, def_storage, mut command_buffer) = unsafe {
+                                                <(
+                                                    Read<DefinitionStorage<MaterialDefinition>>,
+                                                    Read<DefinitionStorage<BuildingDefinition>>,
+                                                    Write<GlobalCommandBuffer>,
+                                                )>::fetch_unchecked(
+                                                    resources
+                                                )
+                                            };
+                                            let name =
+                                                def_storage.keys().nth(selected_building).unwrap();
+
+                                            let _ = def_storage.get_by_name(name).unwrap().spawn(
+                                                resources,
+                                                &mut command_buffer,
+                                                Target::Position(TargetPosition::Tile(coord)),
+                                                &SpawnArguments::Building { material: MaterialComponent::new(material_defs.get_by_name(
+                                                    material_defs.keys().nth(selected_material).unwrap(),
+                                                ).unwrap().id(), MaterialState::Solid) },
+                                            );
                                         },
                                         |_, _| println!("PLACEMENT CANCELED"),
                                     ),
@@ -563,7 +633,10 @@ pub fn build_debug_overlay(
                                         world.get_component::<ItemComponent>(*entity)
                                     {
                                         ui.text(&format!("\tI: {}", item.fetch(&item_defs).name()));
-                                        ui.text(&format!("\tActivePickup: {}", world.has_component::<ActivePickupComponent>(*entity)));
+                                        ui.text(&format!(
+                                            "\tActivePickup: {}",
+                                            world.has_component::<ActivePickupComponent>(*entity)
+                                        ));
                                     } else if let Some(workshop) =
                                         world.get_component::<WorkshopComponent>(*entity)
                                     {

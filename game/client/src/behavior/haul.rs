@@ -22,9 +22,14 @@ pub fn build(storage: &mut bt::BehaviorStorage) -> Result<(), anyhow::Error> {
         make::closure(None, nodes::prepare_haul_parameters),
         make::sub("pickup_item", &storage),
         make::closure(None, nodes::prepare_haul_movement_target),
-        make::closure(None, general_nodes::move_to),
-        make::closure(None, nodes::do_drop),
-        make::closure(None, nodes::make_item_stockpile_child),
+        make::if_else(
+            make::closure(None, general_nodes::move_to),
+            make::sequence(&[
+                make::closure(None, nodes::do_drop),
+                make::closure(None, nodes::make_item_stockpile_child),
+            ]),
+            make::closure(None, nodes::cancel_haul_stockpile),
+        ),
     ]);
     storage.insert("haul_item_to_target", haul_item_to_target);
 
@@ -86,7 +91,9 @@ pub mod nodes {
                     .get_component::<ItemComponent>(item_entry.entity)
                 {
                     // skip if its already in a stockpile, or is a child of someone else, or is active
-                    if state.world.has_component::<ActivePickupComponent>(item_entry.entity)
+                    if state
+                        .world
+                        .has_component::<ActivePickupComponent>(item_entry.entity)
                         || state
                             .world
                             .has_component::<StockpileItemChildComponent>(item_entry.entity)
@@ -166,6 +173,9 @@ pub mod nodes {
                     parent: parameters.stockpile,
                 },
             );
+
+            args.blackboard.remove(fnv!("HaulParameters"));
+
             return BehaviorStatus::success();
         }
 
@@ -215,6 +225,35 @@ pub mod nodes {
                     Target::from_position(parameters.target_tile),
                 ),
             );
+            return BehaviorStatus::success();
+        }
+
+        BehaviorStatus::failure()
+    }
+
+    pub fn cancel_haul_stockpile(
+        state: GameStateRef,
+        args: &mut BehaviorArgs<'_>,
+    ) -> BehaviorStatus {
+        if let Some(parameters) = args
+            .blackboard
+            .get::<HaulParameters>(fnv!("HaulParameters"))
+            .cloned()
+        {
+            unsafe {
+                state
+                    .world
+                    .get_component_mut_unchecked::<StockpileComponent>(parameters.stockpile)
+                    .unwrap()
+                    .tiles
+                    .push(parameters.target_tile)
+                    .unwrap();
+            }
+            args.command_buffer
+                .remove_component::<ActivePickupComponent>(parameters.item);
+
+            args.blackboard.remove(fnv!("HaulParameters"));
+
             return BehaviorStatus::success();
         }
 

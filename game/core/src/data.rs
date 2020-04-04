@@ -159,6 +159,9 @@ pub enum SpawnArguments {
     Item {
         material: MaterialComponent,
     },
+    Building {
+        material: MaterialComponent,
+    },
     Workshop {
         material: MaterialComponent,
     },

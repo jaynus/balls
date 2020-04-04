@@ -34,17 +34,15 @@ pub fn init_camera(
     {
         // Add the camera here because lol
         match settings.display_mode {
-            DisplayMode::Windowed(w, h) => {
-                world.insert(
-                    (),
-                    vec![(
-                        EntityMeta::new(resources.get::<Time>().unwrap().stamp()),
-                        Camera::new(w as f32, h as f32),
-                        Translation(translation),
-                        Scale::default(),
-                    )],
-                )[0]
-            }
+            DisplayMode::Windowed(w, h) => world.insert(
+                (),
+                vec![(
+                    EntityMeta::new(resources.get::<Time>().unwrap().stamp()),
+                    Camera::new(w as f32, h as f32),
+                    Translation(translation),
+                    Scale::default(),
+                )],
+            )[0],
             _ => unimplemented!(),
         }
     }

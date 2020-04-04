@@ -1,11 +1,19 @@
 use rl_ai::{
+    bt::{self, make, BehaviorStatus},
     pathfinding::SpatialMapSet,
-    bt::{self, make, BehaviorStatus}
 };
 use rl_core::{
-    components::PositionComponent, data::Target, defs::reaction::ReactionDefinitionId, fnv,
-    legion::prelude::*, smallvec::SmallVec, GameStateRef,
-    map::{Map, spatial::{SpatialMap, StaticSpatialMap}},
+    components::PositionComponent,
+    data::Target,
+    defs::reaction::ReactionDefinitionId,
+    fnv,
+    legion::prelude::*,
+    map::{
+        spatial::{SpatialMap, StaticSpatialMap},
+        Map,
+    },
+    smallvec::SmallVec,
+    GameStateRef,
 };
 
 pub mod creature;
@@ -125,18 +133,14 @@ pub mod nodes {
 
                 if map.get(target_tile).is_walkable() && spatial_map.is_walkable(target_tile) {
                     target_tile
+                } else if let Some(neighbor) = map
+                    .neighbors_3d(&target_tile)
+                    .iter()
+                    .find(|neighbor| !spatial_set.collides(neighbor))
+                {
+                    *neighbor
                 } else {
-                    if let Some(neighbor) = map.neighbors_3d(&target_tile).iter().find(|neighbor| {
-                        if spatial_set.collides(neighbor) {
-                            false
-                        } else {
-                            true
-                        }
-                    }) {
-                        *neighbor
-                    } else {
-                        return BehaviorStatus::failure();
-                    }
+                    return BehaviorStatus::failure();
                 }
             };
 

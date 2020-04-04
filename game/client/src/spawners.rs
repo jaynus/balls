@@ -20,6 +20,42 @@ pub trait Spawnable {
     ) -> Result<Vec<Entity>, anyhow::Error>;
 }
 
+impl Spawnable for BuildingDefinition {
+    fn spawn(
+        &self,
+        resources: &Resources,
+        command_buffer: &mut CommandBuffer,
+        target: Target,
+        kind: &SpawnArguments,
+    ) -> Result<Vec<Entity>, anyhow::Error> {
+        let map = resources.get::<Map>().unwrap();
+
+        let material = if let SpawnArguments::Building { material } = kind {
+            *material
+        } else {
+            panic!("Wrong kind to spawner")
+        };
+
+        let (world, tile) = target.from_map(&map);
+
+        Ok(command_buffer
+            .insert(
+                (BuildingTag, SpriteLayer::Building),
+                vec![(
+                    EntityMeta::new(resources.get::<Time>().unwrap().stamp()),
+                    Translation(world),
+                    material,
+                    PositionComponent::new(tile),
+                    DimensionsComponent::with_tiles(self.dimensions),
+                    //ItemContainerComponent::default(), // TODO: if has container
+                    BuildingComponent::new(self.id()),
+                    self.sprite.make(),
+                )],
+            )
+            .to_vec())
+    }
+}
+
 impl Spawnable for WorkshopDefinition {
     fn spawn(
         &self,

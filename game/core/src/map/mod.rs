@@ -114,9 +114,9 @@ impl Map {
     pub fn world_to_tile(&self, world_coord: Vec3) -> Vec3i {
         let mut coord = Vec3i::new(
             ((world_coord.x + self.half_world_dimensions.x) / self.sprite_dimensions.x as f32)
-                as i32,
+                .round() as i32,
             ((world_coord.y + self.half_world_dimensions.y) / self.sprite_dimensions.y as f32)
-                as i32,
+                .round() as i32,
             world_coord.z.floor() as i32,
         );
         coord.clamp(Vec3i::new(0, 0, 0), self.dimensions() - Vec3i::new(1, 1, 1));

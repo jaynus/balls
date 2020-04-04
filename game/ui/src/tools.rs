@@ -107,6 +107,7 @@ pub fn build_tools_overlay(
 
                     if let Some(selection) = selection_state.last_selection.as_ref() {
                         match *action {
+                            DesignateAction::Building => unimplemented!(),
                             DesignateAction::Stockpile => {
                                 spawn_stockpile(
                                     world,
@@ -185,8 +186,7 @@ pub fn build_tools_overlay(
                     }
 
                     state = ToolOverlayState::default();
-                    resources.get_mut::<SelectionState>().unwrap().mode =
-                        SelectionMode::EntityWorldBox;
+                    resources.get_mut::<SelectionState>().unwrap().mode = SelectionMode::FreeBox;
                 }
             }
 
@@ -277,7 +277,7 @@ pub fn build_tools_overlay(
                                         .designate_stockpile = ItemKind::Wood.into();
 
                                     resources.get_mut::<SelectionState>().unwrap().mode =
-                                        SelectionMode::MapTileBox;
+                                        SelectionMode::TileBox;
                                     state.active_designation = Some(DesignateAction::Stockpile);
                                 }
                                 if ui.button(im_str!("Anything"), [0.0, 0.0]) {
@@ -287,7 +287,7 @@ pub fn build_tools_overlay(
                                         .designate_stockpile = BitFlags::all();
 
                                     resources.get_mut::<SelectionState>().unwrap().mode =
-                                        SelectionMode::MapTileBox;
+                                        SelectionMode::TileBox;
                                     state.active_designation = Some(DesignateAction::Stockpile);
                                 }
                             });
@@ -311,17 +311,17 @@ pub fn build_tools_overlay(
                             .build(ui, || {
                                 if ui.button(im_str!("Channel"), [0.0, 0.0]) {
                                     resources.get_mut::<SelectionState>().unwrap().mode =
-                                        SelectionMode::MapTileBox;
+                                        SelectionMode::TileBox;
                                     state.active_designation = Some(DesignateAction::Channel);
                                 }
                                 if ui.button(im_str!("Dig"), [0.0, 0.0]) {
                                     resources.get_mut::<SelectionState>().unwrap().mode =
-                                        SelectionMode::MapTileBox;
+                                        SelectionMode::TileBox;
                                     state.active_designation = Some(DesignateAction::Dig);
                                 }
                                 if ui.button(im_str!("Chop Tree"), [0.0, 0.0]) {
                                     resources.get_mut::<SelectionState>().unwrap().mode =
-                                        SelectionMode::MapTileBox;
+                                        SelectionMode::TileBox;
                                     state.active_designation = Some(DesignateAction::ChopTree);
                                 }
                                 if ui.button(im_str!("Harvest"), [0.0, 0.0]) {}

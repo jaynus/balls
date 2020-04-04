@@ -2,13 +2,14 @@ use rl_ai::bt::{BehaviorRoot, BehaviorStorage, BehaviorTreeComponent};
 use rl_core::defs::item::{ItemComponent, StockpileComponent, StockpileTileChildComponent};
 use rl_core::{
     components::{
-        BlackboardComponent, DimensionsComponent, ItemContainerChildComponent, PawnTag,
+        BlackboardComponent, DimensionsComponent, EntityMeta, ItemContainerChildComponent, PawnTag,
         PositionComponent, SelectedComponent,
     },
     data::bt::PickupParameters,
     debug::DebugLines,
     event::Channel,
     fnv,
+    fxhash::FxHashMap,
     input::{ActionBinding, InputActionEvent, InputState, InputStateKind},
     legion::prelude::*,
     map::{
@@ -22,7 +23,9 @@ use rl_core::{
     rstar,
     settings::Settings,
     smallvec::SmallVec,
+    time::Time,
 };
+use rl_render_pod::sprite::Sprite;
 use std::iter::FromIterator;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -48,19 +51,19 @@ pub struct Selection {
     pub category: SelectionCategory,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum SelectionMode {
-    EntityWorldBox,
-    MapTileBox,
+    FreeBox,
+    TileBox,
     TileSingle,
 }
 impl Default for SelectionMode {
     fn default() -> Self {
-        Self::EntityWorldBox
+        Self::FreeBox
     }
 }
 
-#[derive(Default, Debug, Clone)]
+#[derive(Default)]
 pub struct SelectionState {
     pub active_selection: Option<Selection>,
     pub last_selection: Option<Selection>,
@@ -69,6 +72,7 @@ pub struct SelectionState {
     pub start_tile_position: Vec3i,
 
     pub mode: SelectionMode,
+    pub overlay_fn: Option<Box<dyn Fn() -> Sprite + Send + Sync>>,
 }
 
 #[allow(clippy::too_many_lines, clippy::map_clone)]
@@ -83,9 +87,12 @@ pub fn build_mouse_selection_system(
         .unwrap()
         .bind_listener(64);
 
+    let mut overlay_cache: FxHashMap<Vec3i, Entity> = FxHashMap::default();
+
     SystemBuilder::<()>::new("mouse_selection_system")
         .write_resource::<DebugLines>()
         .write_resource::<SelectionState>()
+        .read_resource::<Time>()
         .read_resource::<InputState>()
         .read_resource::<Channel<InputActionEvent>>()
         .read_resource::<Map>()
@@ -108,6 +115,7 @@ pub fn build_mouse_selection_system(
                   (
                 debug_lines,
                 selection_state,
+                time,
                 input_state,
                 action_channel,
                 map,
@@ -132,6 +140,10 @@ pub fn build_mouse_selection_system(
                                 // End selection
                                 selection_state.last_selection =
                                     selection_state.active_selection.take();
+
+                                overlay_cache
+                                    .drain()
+                                    .for_each(|(_, v)| command_buffer.delete(v));
 
                                 selected_query
                                     .iter_entities(world)
@@ -201,7 +213,7 @@ pub fn build_mouse_selection_system(
                             make_tile_aabb(start_tile_position, input_state.mouse_tile_position);
 
                         match mode {
-                            SelectionMode::EntityWorldBox => {
+                            SelectionMode::FreeBox => {
                                 *active_selection = Selection {
                                     world_area: make_world_aabb(
                                         start_world_position,
@@ -239,7 +251,7 @@ pub fn build_mouse_selection_system(
                                     settings.palette().red,
                                 );
                             }
-                            SelectionMode::MapTileBox => {
+                            SelectionMode::TileBox => {
                                 *active_selection = Selection {
                                     world_area: make_world_aabb(
                                         start_world_position,
@@ -258,6 +270,30 @@ pub fn build_mouse_selection_system(
                                 );
                             }
                             _ => unimplemented!(),
+                        }
+                    }
+
+                    // Draw overlay sprites if applicable
+                    if let Some(active_selection) = &selection_state.active_selection {
+                        if let Some(overlay_fn) = &selection_state.overlay_fn {
+                            active_selection.tile_area.iter().for_each(|tile| {
+                                // Add the overlay sprite temporarily
+                                overlay_cache.entry(tile).or_insert_with(|| {
+                                    command_buffer.insert(
+                                        (),
+                                        vec![(EntityMeta::new(time.stamp()), (overlay_fn)())],
+                                    )[0]
+                                });
+                            });
+                            overlay_cache.retain(|k, v| {
+                                if active_selection.tile_area.iter().any(|tile| *k == tile) {
+                                    true
+                                } else {
+                                    command_buffer.delete(*v);
+
+                                    false
+                                }
+                            });
                         }
                     }
 
