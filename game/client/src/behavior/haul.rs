@@ -193,7 +193,7 @@ pub mod nodes {
         {
             args.blackboard.insert(
                 fnv!("MoveParameters"),
-                MoveParameters::new_tile(parameters.target_tile),
+                MoveParameters::new_tile(parameters.target_tile, None),
             );
 
             return BehaviorStatus::success();
@@ -364,7 +364,7 @@ pub mod nodes {
                     ),
                 );
 
-                Some(MoveParameters::new_entity(parameters.target))
+                Some(MoveParameters::new_entity(parameters.target, None))
             }
         } else {
             None

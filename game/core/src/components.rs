@@ -123,7 +123,7 @@ pub struct MovementRequest {
     pub destination: Vec3i,
     #[serde(with = "Vec3iProxy")]
     pub started_at: Vec3i,
-    pub distance: u32,
+    pub distance: Option<u32>,
 }
 impl PartialEq for MovementRequest {
     fn eq(&self, rhv: &Self) -> bool {
@@ -141,15 +141,15 @@ impl MovementRequest {
         Self {
             destination,
             started_at,
-            distance: 0,
+            distance: None,
         }
     }
 
-    pub fn with_distance(started_at: Vec3i, destination: Vec3i, _distance: u32) -> Self {
+    pub fn with_distance(started_at: Vec3i, destination: Vec3i, distance: u32) -> Self {
         Self {
             destination,
             started_at,
-            distance: 0,
+            distance: Some(distance),
         }
     }
 }
@@ -496,10 +496,4 @@ impl NeedsComponent {
     pub fn get_mut(&mut self, kind: NeedKind) -> &mut NeedState {
         self.0.get_mut(kind.as_usize()).unwrap()
     }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, serde::Deserialize, serde::Serialize)]
-pub struct ItemStatusComponent {
-    quality: u32,
-    durability: u32,
 }

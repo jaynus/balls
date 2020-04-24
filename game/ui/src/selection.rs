@@ -512,6 +512,7 @@ pub fn build_mouse_action_system(
                                                 fnv!("MoveParameters"),
                                                 rl_core::data::bt::MoveParameters::new_tile(
                                                     target_tile,
+                                                    None,
                                                 ),
                                             );
                                         }

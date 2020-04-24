@@ -8,6 +8,7 @@ bitflags_serial! {
     pub struct BuildingProperty: u32 {
         const IS_SEAT           =  0b1000_0000_0000_0000_0000_0000_0000_0000;
         const IS_EAT_ASSIST     =  0b0100_0000_0000_0000_0000_0000_0000_0000;
+        const IS_SOLID          =  0b0010_0000_0000_0000_0000_0000_0000_0000;
     }
 }
 
@@ -27,6 +28,9 @@ pub struct BuildingDefinition {
     pub properties: Vec<BuildingProperty>,
 
     #[serde(default)]
+    pub base_status: BuildingStatusComponent,
+
+    #[serde(default)]
     pub sprite: SpriteRef,
     #[serde(with = "Vec3iProxy")]
     pub dimensions: Vec3i,
@@ -37,5 +41,19 @@ pub struct BuildingDefinition {
 impl BuildingDefinition {
     pub fn default_placement() -> PlacementKind {
         PlacementKind::Entity
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, serde::Deserialize, serde::Serialize)]
+pub struct BuildingStatusComponent {
+    quality: u32,
+    durability: u32,
+}
+impl Default for BuildingStatusComponent {
+    fn default() -> Self {
+        Self {
+            quality: 100,
+            durability: 1000,
+        }
     }
 }

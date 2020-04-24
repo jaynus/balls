@@ -157,6 +157,9 @@ pub struct ItemDefinition {
     pub kind: ItemKind,
 
     #[serde(default)]
+    pub base_status: ItemStatusComponent,
+
+    #[serde(default)]
     pub extensions: SmallVec<[ItemExtension; 3]>,
 
     pub dimensions: DimensionsVec,
@@ -221,4 +224,18 @@ pub struct StockpileItemChildComponent {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct StockpileTileChildComponent {
     pub parent: Entity,
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, serde::Deserialize, serde::Serialize)]
+pub struct ItemStatusComponent {
+    quality: u32,
+    durability: u32,
+}
+impl Default for ItemStatusComponent {
+    fn default() -> Self {
+        Self {
+            quality: 100,
+            durability: 1000,
+        }
+    }
 }

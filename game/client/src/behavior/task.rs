@@ -93,7 +93,7 @@ pub mod nodes {
 
                 args.blackboard.insert(
                     fnv!("MoveParameters"),
-                    MoveParameters::new_tile(task_location),
+                    MoveParameters::new_tile(task_location, Some(1)),
                 );
                 log::trace!(target: "behavior", "src={:?}, find_task: success = {:?}, {:?}", args.entity, task_location, entry.entity);
                 return BehaviorStatus::success();

@@ -98,7 +98,7 @@ impl VulkanContext {
     pub unsafe fn create_instance<E: EntryV1_0>(
         entry: &E,
     ) -> Result<<E as EntryV1_0>::Instance, anyhow::Error> {
-        let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation")?];
+        let layer_names = [CString::new("VK_LAYER_KHRONOS_validation")?];
         let layers_names_raw: Vec<*const i8> = layer_names
             .iter()
             .map(|raw_name| raw_name.as_ptr())

@@ -150,6 +150,8 @@ impl RenderManagerBuilder {
             .map(|(n, pass)| pass.subpass_dependency(n as u32))
             .collect::<Vec<_>>();
 
+        println!("Subpasses = {:?}", subpass_dependencies);
+
         let (renderpass, framebuffers) =
             unsafe { create_render_pass(&vk, &subpasses, &subpass_dependencies)? };
 
@@ -528,6 +530,7 @@ unsafe fn create_render_pass(
             samples: vk::SampleCountFlags::TYPE_1,
             load_op: vk::AttachmentLoadOp::CLEAR,
             store_op: vk::AttachmentStoreOp::STORE,
+            initial_layout: vk::ImageLayout::UNDEFINED,
             final_layout: vk::ImageLayout::PRESENT_SRC_KHR,
             ..Default::default()
         },

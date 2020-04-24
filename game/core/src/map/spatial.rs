@@ -123,15 +123,6 @@ impl rstar::PointDistance for SpatialMapEntry {
 #[shrinkwrap(mutable)]
 pub struct SpatialMap(pub rstar::RTree<SpatialMapEntry>);
 
-impl SpatialMap {
-    #[inline]
-    pub fn is_walkable(&self, pos: Vec3i) -> bool {
-        !self
-            .locate_all_at_point(&PositionComponent::new(pos))
-            .any(|entry| !entry.collision.is_walkable())
-    }
-}
-
 #[derive(Shrinkwrap, Default)]
 #[shrinkwrap(mutable)]
 pub struct StaticSpatialMap(pub rstar::RTree<SpatialMapEntry>);

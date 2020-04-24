@@ -131,7 +131,9 @@ pub mod nodes {
                 let static_spatial_map = state.resources.get::<StaticSpatialMap>().unwrap();
                 let spatial_set = [&**static_spatial_map, &**spatial_map];
 
-                if map.get(target_tile).is_walkable() && spatial_map.is_walkable(target_tile) {
+                // TODO: don't ignore parameter.distance
+
+                if map.get(target_tile).is_walkable() && !spatial_set.collides(&target_tile) {
                     target_tile
                 } else if let Some(neighbor) = map
                     .neighbors_3d(&target_tile)
@@ -145,7 +147,11 @@ pub mod nodes {
             };
 
             // We arnt there yet, are we moving there?
-            let request = MovementRequest::with_distance(current_tile, target_tile, 0);
+            let request = MovementRequest::with_distance(
+                current_tile,
+                target_tile,
+                parameters.distance.unwrap_or(0),
+            );
             let already_assigned = *state
                 .world
                 .get_component::<MovementComponent>(source_entity)

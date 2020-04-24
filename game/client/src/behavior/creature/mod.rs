@@ -133,7 +133,7 @@ pub mod nodes {
 
                     args.blackboard.insert(
                         fnv!("MoveParameters"),
-                        MoveParameters::new_tile(found.position()),
+                        MoveParameters::new_tile(found.position(), Some(1)),
                     );
 
                     return BehaviorStatus::success();

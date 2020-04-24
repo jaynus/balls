@@ -76,20 +76,23 @@ pub mod bt {
     #[derive(Copy, Clone, Debug)]
     pub struct MoveParameters {
         pub target: Target,
+        pub distance: Option<u32>,
         pub active_request: Option<MovementRequest>,
     }
     impl MoveParameters {
-        pub fn new_entity(entity: Entity) -> Self {
+        pub fn new_entity(entity: Entity, distance: Option<u32>) -> Self {
             Self {
                 target: Target::Entity(entity),
                 active_request: None,
+                distance,
             }
         }
 
-        pub fn new_tile(tile: Vec3i) -> Self {
+        pub fn new_tile(tile: Vec3i, distance: Option<u32>) -> Self {
             Self {
                 target: Target::Position(TargetPosition::Tile(tile)),
                 active_request: None,
+                distance,
             }
         }
     }

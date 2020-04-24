@@ -49,6 +49,7 @@ impl Spawnable for BuildingDefinition {
                     DimensionsComponent::with_tiles(self.dimensions),
                     //ItemContainerComponent::default(), // TODO: if has container
                     BuildingComponent::new(self.id()),
+                    self.base_status,
                     self.sprite.make(),
                 )],
             )
@@ -121,6 +122,7 @@ impl Spawnable for ItemDefinition {
                                 parent: target_entity,
                             },
                             ItemComponent::new(self.id),
+                            self.base_status,
                             HasTasksComponent::default(),
                         )],
                     )
@@ -150,6 +152,7 @@ impl Spawnable for ItemDefinition {
                             PositionComponent::new(tile),
                             DimensionsComponent::default(),
                             self.sprite.make(),
+                            self.base_status,
                         )],
                     )
                     .to_vec()
