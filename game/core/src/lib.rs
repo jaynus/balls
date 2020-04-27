@@ -223,6 +223,12 @@ where
         handle
     }
 
+    pub fn remove(&mut self, handle: H) -> Option<T> {
+        let name = self.get_name(handle).unwrap().to_owned();
+        self.names.remove(&name);
+        self.data.remove(handle)
+    }
+
     #[inline]
     pub fn get_handle(&self, name: &str) -> Option<H> {
         Some(*self.names.get(&name.to_lowercase())?)

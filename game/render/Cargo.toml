@@ -6,11 +6,21 @@ edition = "2018"
 
 
 [dependencies]
-rl_core = { path = "../core" }
 rl_render_pod = { path = "../render_pod" }
+rl_core = { path = "../core" }
 
 log = "0.4"
 thiserror = "1"
 anyhow = "1"
+derivative = "2"
+shrinkwraprs = "*"
+slotmap = "*"
+parking_lot = "*"
+smallvec = "*"
 
-rendy = { path = "../../../rendy/rendy", features = ["base", "wsi", "init-winit", "texture-image", "texture-palette"] }
+winit = { version = "0.22" }
+vk-mem = { version = "*" }
+ash = { version = "*" }
+
+[[example]]
+name = "test"

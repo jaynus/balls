@@ -5,5 +5,5 @@ opt-level = 2
 debug = true
 
 [workspace]
-members = ["client", "core", "render_vk", "macros", "ai",  "ui",  "reaction"]
+members = ["client", "core", "render_vk", "render", "macros", "ai",  "ui",  "reaction"]
 #"worldgen",

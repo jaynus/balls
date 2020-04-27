@@ -14,53 +14,23 @@
     non_camel_case_types
 )]
 
-pub mod manager;
+pub mod context;
+pub mod factory;
+pub mod resources;
 
-pub use rendy;
-pub use rendy::hal;
+const APP_NAME: &str = "RL";
 
-use rl_core::{
-    legion::prelude::*,
-    settings::{DisplayMode, Settings},
-    winit::{
-        self,
-        event_loop::EventLoop,
-        window::{Window, WindowBuilder},
-    },
-    ScreenDimensions,
-};
-use std::sync::Arc;
-
-pub struct RenderContext<B: hal::Backend> {
-    _marker: std::marker::PhantomData<B>,
+pub mod alloc {
+    pub type AllocatorPtr = std::sync::Arc<vk_mem::Allocator>;
+    pub use vk_mem::*;
 }
-impl<B: hal::Backend> RenderContext<B> {
-    pub fn new(
-        event_loop: &EventLoop<()>,
-        _app: &mut rl_core::app::ApplicationContext,
-        state: &mut rl_core::GameState,
-    ) -> Result<Self, anyhow::Error> {
-        let window_builder = {
-            let settings = state.resources.get::<Settings>().unwrap();
 
-            let mut builder = WindowBuilder::new().with_title(settings.window_title.clone());
+pub trait Destroyable {
+    unsafe fn destroy(&mut self, device: &context::Context) -> Result<(), Error>;
+}
 
-            match settings.display_mode {
-                DisplayMode::Fullscreen => {
-                    unimplemented!(
-                        // TODO: https://github.com/rust-windowing/winit/blob/master/examples/fullscreen.rs
-                    )
-                }
-                DisplayMode::Windowed(w, h) => {
-                    builder = builder.with_inner_size(winit::dpi::Size::Logical(
-                        winit::dpi::LogicalSize::new(f64::from(w), f64::from(h)),
-                    ))
-                }
-            }
-
-            builder
-        };
-
-        unimplemented!()
-    }
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error("Unknown")]
+    Unknown,
 }

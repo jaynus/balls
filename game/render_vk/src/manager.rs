@@ -348,23 +348,6 @@ impl RenderManager {
             )
             .expect("Begin commandbuffer");
 
-        /* TODO: we cant do this without a new present staging memory barrier with a new attachment
-        context.vk.device.device.cmd_clear_color_image(
-            context.vk.primary_command_buffers[self.current_frame],
-            context.vk.present_images.images[self.current_frame],
-            vk::ImageLayout::PRESENT_SRC_KHR,
-            &vk::ClearColorValue {
-                float32: [0.0, 0.0, 0.0, 1.0],
-            },
-            &[vk::ImageSubresourceRange {
-                aspect_mask: vk::ImageAspectFlags::COLOR,
-                level_count: 1,
-                layer_count: 1,
-                ..Default::default()
-            }],
-        );
-        */
-
         context.vk.device.cmd_begin_render_pass(
             context.vk.primary_command_buffers[self.current_frame],
             &vk::RenderPassBeginInfo::builder()
@@ -377,7 +360,7 @@ impl RenderManager {
                 .clear_values(&[
                     vk::ClearValue {
                         color: vk::ClearColorValue {
-                            float32: [0.0, 0.0, 0.0, 1.0],
+                            float32: [0.0, 0.0, 0.0, 0.0],
                         },
                     },
                     vk::ClearValue {
@@ -432,6 +415,25 @@ impl RenderManager {
             .device
             .cmd_end_render_pass(context.vk.primary_command_buffers[self.current_frame]);
 
+        context.vk.device.cmd_pipeline_barrier(
+            context.vk.primary_command_buffers[self.current_frame],
+            vk::PipelineStageFlags::BOTTOM_OF_PIPE,
+            vk::PipelineStageFlags::BOTTOM_OF_PIPE,
+            vk::DependencyFlags::empty(),
+            &[],
+            &[],
+            &[*vk::ImageMemoryBarrier::builder()
+                .old_layout(vk::ImageLayout::UNDEFINED)
+                .new_layout(vk::ImageLayout::PRESENT_SRC_KHR)
+                .image(context.vk.present_images.images[self.current_frame])
+                .subresource_range(vk::ImageSubresourceRange {
+                    aspect_mask: vk::ImageAspectFlags::COLOR,
+                    level_count: 1,
+                    layer_count: 1,
+                    ..Default::default()
+                })],
+        );
+
         context
             .vk
             .device
@@ -467,19 +469,20 @@ impl RenderManager {
             )
             .expect("queue submit failed.");
 
-        let present_info = vk::PresentInfoKHR {
-            wait_semaphore_count: 1,
-            p_wait_semaphores: &context.vk.rendering_complete_semaphores[self.current_frame],
-            swapchain_count: 1,
-            p_swapchains: &context.vk.swapchain,
-            p_image_indices: &present_index,
-            ..Default::default()
-        };
-
+        let mut results: [vk::Result; 1] = [vk::Result::from_raw(0)];
         if context
             .vk
             .swapchain_loader
-            .queue_present(context.vk.device.present_queue, &present_info)
+            .queue_present(
+                context.vk.device.present_queue,
+                &vk::PresentInfoKHR::builder()
+                    .wait_semaphores(
+                        &[context.vk.rendering_complete_semaphores[self.current_frame]],
+                    )
+                    .swapchains(&[context.vk.swapchain])
+                    .image_indices(&[present_index])
+                    .results(&mut results),
+            )
             .is_err()
         {
             self.swapchain_invalid = true;
